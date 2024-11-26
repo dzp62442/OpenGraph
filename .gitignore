@@ -1,0 +1,6 @@
+*.pth
+*.pkl
+*.ckpt
+third_parties/
+data/
+__pycache__/
