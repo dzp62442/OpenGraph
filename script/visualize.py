@@ -38,7 +38,7 @@ from tokenize_anything.utils.image import im_rescale
 from tokenize_anything.utils.image import im_vstack
 from some_class.datasets_class import SemanticKittiDataset
 import re
-import openai
+from openai import OpenAI
 
 saved_viewpoint = None
 
@@ -191,8 +191,10 @@ def main(cfg : DictConfig):
     pcds = copy.deepcopy(objects.get_values("pcd"))
     bboxes = copy.deepcopy(objects.get_values("bbox"))
     # gpt加载
-    openai.api_key = cfg.openai_key
-    openai.api_base = cfg.api_base
+    client = OpenAI(
+        api_key=os.environ.get("OPENAI_API_KEY"),
+        base_url=os.environ.get("OPENAI_API_URL")
+    )
     TIMEOUT = 25  # timeout in seconds
     DEFAULT_PROMPT = """
     You are an object picker that picks the three objects from a sequence of objects 
@@ -387,12 +389,12 @@ def main(cfg : DictConfig):
         '''
         text_query = input("Enter your query for LLM: ")
         text_queries = "Query statement: "+text_query
-        chat_completion = openai.ChatCompletion.create(
+        chat_completion = client.chat.completions.create(
             model="gpt-4",
             messages=[{"role": "user", "content": DEFAULT_PROMPT + "\n\n" + caption_all+text_queries}],
             timeout=TIMEOUT,  # Timeout in seconds
         )
-        input_text = chat_completion["choices"][0]["message"]["content"]
+        input_text = chat_completion.choices[0].message.content
         print(input_text)
         pattern = r'\[([^]]+)\]'  # 匹配方括号中的内容
         match = re.search(pattern, input_text)
@@ -450,7 +452,7 @@ def main(cfg : DictConfig):
         '''
         # 输入图像
         image_query = input("Enter the picture name: ")
-        image_base_path = '/code1/dyn/github_repos/OpenGraph/image_query/'
+        image_base_path = '/home/dzp62442/Projects/OpenGraph/image_query/'
         input_image_path = '{}{}'.format(image_base_path, image_query)
         input_image = cv2.imread(input_image_path)
         input_image = cv2.cvtColor(input_image, cv2.COLOR_BGR2RGB)

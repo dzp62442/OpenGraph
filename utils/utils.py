@@ -2,6 +2,7 @@
 2024.01.17 
 工具函数文件
 """
+import os
 import sys
 sys.path.append("/home/dzp62442/Projects/OpenGraph")
 import numpy as np
@@ -26,7 +27,7 @@ import json
 from llama import Llama, Dialog
 import faiss
 import re
-import openai
+from openai import OpenAI
 from tqdm import trange
 
 try:
@@ -788,8 +789,10 @@ def class_objects(cfg, sbert_model, objects: MapObjectList, bg_objects: MapObjec
                     bg_objects[i]['inst_color'] = np.array(class_colors_sk_disk[extracted_content])/255.0
     elif cfg.class_methods == "gpt":
         print("Asking gpt for class")
-        openai.api_key = cfg.openai_key
-        openai.api_base = cfg.api_base
+        client = OpenAI(
+            api_key=os.environ.get("OPENAI_API_KEY"),
+            base_url=os.environ.get("OPENAI_API_URL")
+        )
         TIMEOUT = 25  # timeout in seconds
         DEFAULT_PROMPT = """
         You are a classifier that can categorize a caption phrase into one of the following categories based on a caption phrase.
@@ -823,12 +826,12 @@ def class_objects(cfg, sbert_model, objects: MapObjectList, bg_objects: MapObjec
             end_idx = (batch_idx + 1) * batch_size
             current_caption_batch = caption_objects[start_idx:end_idx]
             caption_obj_batch = '\n'.join(current_caption_batch)
-            chat_completion = openai.ChatCompletion.create(
+            chat_completion = client.chat.completions.create(
                 model="gpt-4",
                 messages=[{"role": "user", "content": DEFAULT_PROMPT + "\n\n" + caption_obj_batch}],
                 timeout=TIMEOUT,  # Timeout in seconds
             )
-            input_text_batch = chat_completion["choices"][0]["message"]["content"]
+            input_text_batch = chat_completion.choices[0].message.content
             input_text_batch = input_text_batch.split('\n')
             extracted_contents_batch = [re.search(r'\[([^]]+)\]', result).group(1) for result in input_text_batch if re.search(r'\[([^]]+)\]', result)]
             for i in range(len(current_caption_batch)):
@@ -850,12 +853,12 @@ def class_objects(cfg, sbert_model, objects: MapObjectList, bg_objects: MapObjec
         if bg_objects is not None:
             caption_obj = bg_objects.get_stacked_str_torch("caption")
             caption_obj = '\n'.join(caption_obj)
-            chat_completion = openai.ChatCompletion.create(
+            chat_completion = client.chat.completions.create(
                 model="gpt-4",
                 messages=[{"role": "user", "content": DEFAULT_PROMPT + "\n\n" + caption_obj}],
                 timeout=TIMEOUT,  # Timeout in seconds
             )
-            input_text = chat_completion["choices"][0]["message"]["content"]
+            input_text = chat_completion.choices[0].message.content
             input_text = input_text.split('\n')
             extracted_contents = [re.search(r'\[([^]]+)\]', result).group(1) for result in input_text if re.search(r'\[([^]]+)\]', result)]
             for i in range(len(bg_objects)):
