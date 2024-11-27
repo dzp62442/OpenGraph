@@ -12,9 +12,7 @@ import torch
 from pathlib import Path
 from typing import List, Dict, Optional, Any
 from tokenize_anything import model_registry
-sys.path.append("/home/dyn/multimodal/Grounded-Segment-Anything")
-sys.path.append("/home/dyn/multimodal/Grounded-Segment-Anything/Tag2Text")
-sys.path.append("/code1/dyn/github_repos/OpenGraph")
+sys.path.append("/home/dzp62442/Projects/OpenGraph/third_parties/recognize-anything")
 from some_class.amg_class import MyAutomaticMaskGenerator
 from some_class.map_calss import DetectionList
 import open3d as o3d
@@ -31,7 +29,7 @@ from openai import OpenAI
 from tqdm import trange
 
 try:
-    from Tag2Text.models import tag2text
+    from ram.models import tag2text
     import torchvision.transforms as TS
 except ImportError as e:
     print("Tag2text sub-package not found. Please check your PATH. ")
