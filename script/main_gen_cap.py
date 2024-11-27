@@ -14,7 +14,7 @@ import glob
 import os
 import gzip
 import pickle
-from utils.utils import  load_models, project
+from utils_opengraph.utils import  load_models, project
 from tqdm import trange
 from some_class.datasets_class import SemanticKittiDataset
 import open3d as o3d

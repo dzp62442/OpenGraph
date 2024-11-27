@@ -22,7 +22,7 @@ import cv2
 from omegaconf import DictConfig
 import distinctipy
 from some_class.map_calss import MapObjectList
-from utils.utils import  load_models
+from utils_opengraph.utils import  load_models
 import json
 from PIL import Image
 from pathlib import Path

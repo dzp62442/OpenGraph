@@ -15,7 +15,7 @@ from tqdm import trange
 from typing import List, Optional
 from llama import Llama, Dialog
 import time
-from utils.utils import get_bounding_box, process_pcd
+from utils_opengraph.utils import get_bounding_box, process_pcd
 
 def compute_spatial_similarities(detection_list: DetectionList, objects: MapObjectList) -> torch.Tensor:
     '''

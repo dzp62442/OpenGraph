@@ -13,7 +13,7 @@ import gzip
 import pickle
 from sentence_transformers import SentenceTransformer
 from datetime import datetime
-from utils.utils import project, gobs_to_detection_list, denoise_objects, filter_objects, merge_objects, accumulate_pc, distance_filter, show_captions, class_objects
+from utils_opengraph.utils import project, gobs_to_detection_list, denoise_objects, filter_objects, merge_objects, accumulate_pc, distance_filter, show_captions, class_objects
 from tqdm import trange
 from some_class.datasets_class import SemanticKittiDataset
 from some_class.map_calss import MapObjectList

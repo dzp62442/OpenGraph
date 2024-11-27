@@ -49,7 +49,7 @@ class DetectionList(list):
         得到堆叠起来的值numpy类型
         '''
         values = self.get_stacked_values_torch(key, idx)
-        from utils.utils import to_numpy
+        from utils_opengraph.utils import to_numpy
         return to_numpy(values)
     
     def get_stacked_str_torch(self, key, idx:int=None):
@@ -129,7 +129,7 @@ class MapObjectList(DetectionList):
         输入新的点云的特征，计算相似性
         '''
         # 如果是一个 numpy 数组，则使其成为一个张量
-        from utils.utils import to_tensor
+        from utils_opengraph.utils import to_tensor
         new_ft = to_tensor(new_ft)
         # 假设计算特征的余弦相似性，则需要得到所有实例的
         clip_fts = self.get_stacked_values_torch('ft')
@@ -145,7 +145,7 @@ class MapObjectList(DetectionList):
         s_obj_list = []
         for obj in self:
             s_obj_dict = copy.deepcopy(obj)
-            from utils.utils import to_numpy
+            from utils_opengraph.utils import to_numpy
             s_obj_dict['ft'] = to_numpy(s_obj_dict['ft'])
             s_obj_dict['pcd_np'] = np.asarray(s_obj_dict['pcd'].points)
             s_obj_dict['bbox_np'] = np.asarray(s_obj_dict['bbox'].get_box_points())
@@ -165,7 +165,7 @@ class MapObjectList(DetectionList):
         for s_obj_dict in s_obj_list:
             new_obj = copy.deepcopy(s_obj_dict)
             # 把键值复制回来
-            from utils.utils import to_tensor
+            from utils_opengraph.utils import to_tensor
             new_obj['ft'] = to_tensor(new_obj['ft'])
             new_obj['pcd'] = o3d.geometry.PointCloud()
             new_obj['pcd'].points = o3d.utility.Vector3dVector(new_obj['pcd_np'])
