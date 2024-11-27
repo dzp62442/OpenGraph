@@ -3,7 +3,7 @@
 读取离线的caption和mask，映射到点云
 """
 import sys
-sys.path.append("/code1/dyn/github_repos/OpenGraph")
+sys.path.append("/home/dzp62442/Projects/OpenGraph")
 import numpy as np
 import cv2
 import torch

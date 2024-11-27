@@ -3,7 +3,7 @@
 将得到的地图可视化并实现查询等
 """
 import sys
-sys.path.append("/code1/dyn/github_repos/OpenGraph")
+sys.path.append("/home/dzp62442/Projects/OpenGraph")
 import copy
 import networkx as nx
 from scipy.spatial import KDTree
