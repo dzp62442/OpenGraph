@@ -58,7 +58,7 @@ def load_models(cfg):
     for i in range(3012, 3429):
         delete_tag_index.append(i)
     # load model
-    tagging_model = tag2text.tag2text_caption(pretrained=TAG2TEXT_CHECKPOINT_PATH,
+    tagging_model = tag2text(pretrained=TAG2TEXT_CHECKPOINT_PATH,
                                             image_size=384,
                                             vit='swin_b',
                                             delete_tag_index=delete_tag_index)
