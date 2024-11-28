@@ -418,7 +418,7 @@ def merge_overlap_objects(cfg, objects: MapObjectList, overlap_matrix: np.ndarra
         if ratio > cfg.merge_overlap_thresh and ft_sim > cfg.merge_ft_thresh:
                 if kept_objects[j]:
                     # 然后将对象 i 并入对象 j
-                    from utils.merge import merge_obj2_into_obj1
+                    from utils_opengraph.merge import merge_obj2_into_obj1
                     objects[j] = merge_obj2_into_obj1(cfg, objects[j], objects[i])
                     kept_objects[i] = False
         else:

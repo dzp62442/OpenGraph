@@ -17,11 +17,11 @@ from utils_opengraph.utils import project, gobs_to_detection_list, denoise_objec
 from tqdm import trange
 from some_class.datasets_class import SemanticKittiDataset
 from some_class.map_calss import MapObjectList
-from utils.merge import compute_spatial_similarities, compute_caption_similarities, compute_ft_similarities, aggregate_similarities, merge_detections_to_objects, caption_merge, captions_ft
+from utils_opengraph.merge import compute_spatial_similarities, compute_caption_similarities, compute_ft_similarities, aggregate_similarities, merge_detections_to_objects, caption_merge, captions_ft
 import open3d as o3d
 import hydra
 from omegaconf import DictConfig
-from utils.merge import merge_obj2_into_obj1
+from utils_opengraph.merge import merge_obj2_into_obj1
 import mos4d.models.models_test as models
 
 # 一些背景常见的caption：道路，人行道
