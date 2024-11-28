@@ -1,3 +1,14 @@
+## 1 环境配置注意事项
+
+1. 安装 TAP 库时需要先安装 flash-attn 库，否则会报错 NoneType；安装 flash-attn 时 pip 编译轮子长达数小时，这是正常的
+2. 下载 Llama2 模型时，Meta 官网申请不通过，从 HuggingFace 下载；应当下载 Llama-2-7b-chat 仓库，而不是 Llama-2-7b-chat-hf 仓库，仓库中需要有 .pth  文件
+3. 4DMOS 仓库默认分支为 1.0，源代码组织方式和模型结构定义与本仓库不同，需要将 4DMOS 切换到 0.1 分支进行安装
+4. 安装 4DMOS 时会自动安装最新的 pytorch（2.5+cu12），导致 pytorch 版本、编译 pytorch 的 CUDA 版本与系统 CUDA 版本不匹配，需要再手动装回 pytorch 2.0.1+cu11.8；此时使用 pip 安装，conda 解析环境冲突
+5. 导入 pytorch_lightning 时会报错找不到 GLIBCXX_3.4.29，但先导入 torchmetrics 再导入 pytorch_lightning 就不会报错
+
+
+------
+
 <br>
 <p align="center">
 <h1 align="center"><strong>OpenGraph: Open-Vocabulary Hierarchical 3D Graph Representation in Large-Scale Outdoor Environments</strong></h1>

@@ -1,5 +1,5 @@
 # 加载数据集相关
-basedir: /data/dyn/SemanticKitti/sequences/
+basedir: data/dataset/sequences/
 sequence: !!str 05
 stride: 10   # 图像间隔
 start: 0
@@ -8,14 +8,14 @@ end: 100
 # 生成caption相关
 save_vis: !!bool False                          # 是否保存可视化
 save_cap: !!bool True                          # 是否caption数据
-save_vis_path: ../results/${sequence}/vis/
-save_cap_path: ../results/${sequence}/caption/
-tag2text_path: /data/dyn/weights/tag2text_swin_14m.pth
-gd_path: /home/dyn/multimodal/Grounded-Segment-Anything/GroundingDINO/groundingdino/config/GroundingDINO_SwinT_OGC.py
-gd_weights: /home/dyn/multimodal/Grounded-Segment-Anything/groundingdino_swint_ogc.pth
-tap_path: /home/dyn/outdoor/tokenize-anything/weights/tap_vit_l_03f8ec.pkl
-tap_merge_path: /home/dyn/outdoor/tokenize-anything/weights/merged_2560.pkl
-sbert_path: /home/dyn/multimodal/SBERT/pretrained/model/all-MiniLM-L6-v2
+save_vis_path: results/${sequence}/vis/
+save_cap_path: results/${sequence}/caption/
+tag2text_path: /home/dzp62442/Projects/OpenGraph_third_parties/tag2text_swin_14m.pth
+gd_path: /home/dzp62442/Projects/OpenGraph_third_parties/GroundingDINO/groundingdino/config/GroundingDINO_SwinT_OGC.py
+gd_weights: /home/dzp62442/Projects/OpenGraph_third_parties/groundingdino_swint_ogc.pth
+tap_path: /home/dzp62442/Projects/OpenGraph_third_parties/tap_vit_l_v1_0.pkl
+tap_merge_path: /home/dzp62442/Projects/OpenGraph_third_parties/merged_2560.pkl
+sbert_path: /home/dzp62442/Projects/OpenGraph_third_parties/all-MiniLM-L6-v2
 
 # 生成点云地图相关
 filter_dis: !!bool False                       # 是否过滤太远的物体
@@ -23,7 +23,7 @@ max_depth: 100                                 # 设置最大点云距离，过�
 bg_rate: 0.80                                  # 判断属于背景的概率
 min_points_threshold: 80                       # 单帧低于这个数量的实例直接不要
 filter_dynamic: !!bool True                    # 是否过滤动态物体
-mos_path: /home/dyn/outdoor/4DMOS/10_scans.ckpt                               # 4DMOS的权重路径，10对应我们的stride，一定一致
+mos_path: /home/dzp62442/Projects/OpenGraph_third_parties/4DMOS/10_scans.ckpt      # 4DMOS的权重路径，10对应我们的stride，一定一致
 moving_thre: 0.5                               # 判断是否为动态物体的阈值
 dbscan_remove_noise: !!bool True               # 是否通过聚类，移除噪点
 dbscan_eps: 0.5                                # 聚类参数
@@ -37,15 +37,15 @@ spatial_weight: 1.0                            # 空间相似性的权重，这�
 caption_weight: 0.2                            # caption相似性的权重
 ft_weight: 0.4                                 # 特征相似性的权重
 sim_threshold: 0.6                             # 整合相似性得分的阈值
-llama_ckpt_dir: '/data/dyn/weights/llama_ckpt/llama-2-7b-chat/'               # llama ckpt路径
-llama_tokenizer_path: '/data/dyn/weights/llama_ckpt/tokenizer.model'          # llama 分词器路径
+llama_ckpt_dir: '/home/dzp62442/Projects/OpenGraph_third_parties/Llama-2-7b-chat/'               # llama ckpt路径
+llama_tokenizer_path: '/home/dzp62442/Projects/OpenGraph_third_parties/tokenizer.model'          # llama 分词器路径
 llama_max_seq_len: 512                         # llama 最大输入token长度
 llama_max_batch_size: 8                        # llama 最大dialog处理数目
 caption_merge_ft: !!bool True                  # 融合完成caption之后是否计算其特征
 
 # 地图保存和后处理
 save_pcd: !!bool True                          # 是否保存最终地图   
-save_pcd_path: ../results/${sequence}/pcd/     # 保存pcd地图的位置
+save_pcd_path: results/${sequence}/pcd/     # 保存pcd地图的位置
 obj_min_points: 50                             # 最后点云的物体至少这些点，否则不要
 obj_min_detections: 1                          # 最后点云的物体至少被观测这些次，否则不要，很多只有1次观测
 merge_final: !!bool True                       # 是否融合最后的地图
@@ -62,16 +62,16 @@ class_colors_json: ./class_colors/class_colors.json       # semantickitti类别�
 
 # 可视化相关
 vis_sequence: !!str 05
-result_path: ../results/${vis_sequence}/pcd/full_pcd.pkl.gz       # 读取的物体结果地址
+result_path: results/${vis_sequence}/pcd/full_pcd.pkl.gz       # 读取的物体结果地址
 vis_ft_weight: 0.5                                                            # 多模态检索时所用的ft特征权重
 vis_caption_weight: 0.5                                                       # 多模态检索时所用的最终caption权重
-scenegraph_path: ../results/${vis_sequence}/pcd/object_relations.json       # 读取的物体间关系结果地址
+scenegraph_path: results/${vis_sequence}/pcd/object_relations.json       # 读取的物体间关系结果地址
 scenegraph_vis: !!bool False                                                  # 是否可视化场景图
-save_image_vis_path: ../results/image_query/vis/                              # 图像检索的目录
+save_image_vis_path: results/image_query/vis/                              # 图像检索的目录
 save_image_vis: !!bool False                                                  # 是否保存检索的图像效果
 no_sbert: !!bool False                                                        # 不需要sbert模型来检索
 no_tap: !!bool False                                                          # 不需要tap模型来获取caption
 
 # 场景图先关
-save_lane_path:  ../results/${sequence}/graph+road.json                   # 保存路网的地址 
-our_pcd: ../results/${sequence}/pcd/our_pc.pcd                          # 我们的语义地图
+save_lane_path:  results/${sequence}/graph+road.json                   # 保存路网的地址 
+our_pcd: results/${sequence}/pcd/our_pc.pcd                          # 我们的语义地图

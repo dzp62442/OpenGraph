@@ -22,7 +22,8 @@ import open3d as o3d
 import hydra
 from omegaconf import DictConfig
 from utils_opengraph.merge import merge_obj2_into_obj1
-import mos4d.models.models_test as models
+import torchmetrics
+import mos4d.models.models as models
 
 # 一些背景常见的caption：道路，人行道
 # 背景可能产生的标签
@@ -65,6 +66,7 @@ def main(cfg : DictConfig):
     if cfg.filter_dynamic:
         weights = cfg.mos_path
         mos_cfg = torch.load(weights)["hyper_parameters"]
+        mos_cfg["DATA"]["SEMANTIC_CONFIG_FILE"] = "/home/dzp62442/Projects/OpenGraph_third_parties/4DMOS/config/semantic-kitti-mos.yaml"
         ckpt = torch.load(weights)
         mos_model = models.MOSNet(mos_cfg)
         mos_model.load_state_dict(ckpt["state_dict"])

@@ -1,5 +1,6 @@
 import sys
 sys.path.append("/home/dzp62442/Projects/OpenGraph")
+import torchmetrics
 import open3d as o3d
 import hydra
 from omegaconf import DictConfig

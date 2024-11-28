@@ -158,7 +158,7 @@ def build_SG(cfg, objects: MapObjectList):
                 output_dict = input_dict
                 relations.append(output_dict)
         # Saving the output
-        print("Saving object relations to file...")
+        print(f"Saving object relations to file {Path(cfg.save_pcd_path)}/object_relations.json ...")
         with open(Path(cfg.save_pcd_path) / "object_relations.json", "w") as f:
             json.dump(relations, f, indent=4)
         # else:

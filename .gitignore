@@ -5,3 +5,4 @@ third_parties/
 data/
 __pycache__/
 outputs/
+results/
