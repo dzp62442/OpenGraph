@@ -285,7 +285,12 @@ def main(cfg : DictConfig):
     # 保留每个簇中心点
     unique_cluster_centers = np.array(cluster_centers)\
     # 所有道路结点
-    all_path_nodes = np.vstack((unique_cluster_centers,duandians))
+    print(unique_cluster_centers)
+    print(duandians)
+    if (len(duandians) == 0):
+        all_path_nodes = unique_cluster_centers
+    else:
+        all_path_nodes = np.vstack((unique_cluster_centers,duandians))
     
     # 计算轨迹点与道路节点之间的距离
     distances = distance.cdist(all_path_nodes, current_poses)
@@ -313,6 +318,7 @@ def main(cfg : DictConfig):
     
     # 得到路径
     paths, paths_index = generate_paths(node_sequence, all_path_nodes)
+    print(paths_index)
     
     nodes, edges = refine_nodes(all_path_nodes, paths_index, dis=20)
     
